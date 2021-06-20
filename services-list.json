@@ -1,0 +1,78 @@
+{
+    "windows": {
+        "set1": {
+            "tc": {
+                "creds": {
+                    "ip": "10.134.64.63",
+                    "username": "yytcadm",
+                    "password": "Pa55w_rd"
+                },
+                "Teamcenter Action Manager Service": "actionmgrd",
+                "Teamcenter 4GD Change Detection Service": "4gd_change_detection_service",
+                "Teamcenter Schedule Management Service": "schmgtwfd",
+                "Teamcenter Shared Metadata Cache Service": "shared_server_metadata_cache_mgr",
+                "Teamcenter Subscription Manager Service": "subscripmgrd",
+                "Teamcenter Task Monitor Service": "taskmonitor",
+                "Teamcenter Tessellation Service": "tess_server",
+                "Teamcenter Server Manager config1_PoolA": "\"Teamcenter Server Manager config1_PoolA\"",
+                "Teamcenter FSC Service FSC_pnv6s1869_yytcadm": "\"Teamcenter FSC Service FSC_pnv6s1869_yytcadm\"",
+                "Teamcenter LIS Service LIS_pnv6s1869_yytcadm": "\"Teamcenter LIS Service LIS_pnv6s1869_yytcadm\""
+            },
+            "aw": {
+                "creds": {
+                    "ip": "10.134.64.68",
+                    "username": "yytcadm",
+                    "password": "Pa55w_rd"
+                },
+                "Teamcenter Log Forwarder": "Teamcenter_Log_Forwarder",
+                "Teamcenter Process Manager": "\"Teamcenter Process Manager\"",
+                "Weblogic_tc_AdminServer": "Weblogic_tc_AdminServer"
+            },
+            "db": {
+                "creds": {
+                    "ip": "10.134.64.66",
+                    "username": "yytcadm",
+                    "password": "Pa55w_rd"
+                },
+                "OracleServiceTC": "OracleServiceTC"
+            }
+        },
+        "set2": {
+            "tc": {
+                "creds": {
+                    "ip": "10.134.64.54",
+                    "username": "yytcadm",
+                    "password": "Pa55w_rd"
+                },
+                "Teamcenter Action Manager Service": "actionmgrd",
+                "Teamcenter 4GD Change Detection Service": "4gd_change_detection_service",
+                "Teamcenter Schedule Management Service": "schmgtwfd",
+                "Teamcenter Shared Metadata Cache Service": "shared_server_metadata_cache_mgr",
+                "Teamcenter Subscription Manager Service": "subscripmgrd",
+                "Teamcenter Task Monitor Service": "taskmonitor",
+                "Teamcenter Tessellation Service": "tess_server",
+                "Teamcenter Server Manager config1_PoolA": "\"Teamcenter Server Manager config1_PoolA\"",
+                "Teamcenter FSC Service FSC_pnv6s1869_yytcadm": "\"Teamcenter FSC Service FSC_pnv6s1869_yytcadm\"",
+                "Teamcenter LIS Service LIS_pnv6s1869_yytcadm": "\"Teamcenter LIS Service LIS_pnv6s1869_yytcadm\""
+            },
+            "aw": {
+                "creds": {
+                    "ip": "10.134.64.58",
+                    "username": "yytcadm",
+                    "password": "Pa55w_rd"
+                },
+                "Teamcenter Log Forwarder": "Teamcenter_Log_Aggregator",
+                "Teamcenter Process Manager": "\"Teamcenter Process Manager\"",
+                "Weblogic_tc_AdminServer": "Weblogic_tc_AdminServer"
+            },
+            "db": {
+                "creds": {
+                    "ip": "10.134.64.57",
+                    "username": "yytcadm",
+                    "password": "Pa55w_rd"
+                },
+                "OracleServiceTC": "OracleServiceTC"
+            }
+        }
+    }
+}
