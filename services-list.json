@@ -3,7 +3,7 @@
         "set1": {
             "tc": {
                 "creds": {
-                    "ip": "10.134.64.63",
+                    "ip": "10.134.64.43",
                     "username": "yytcadm",
                     "password": "Pa55w_rd"
                 },
@@ -20,7 +20,7 @@
             },
             "aw": {
                 "creds": {
-                    "ip": "10.134.64.68",
+                    "ip": "10.134.64.163",
                     "username": "yytcadm",
                     "password": "Pa55w_rd"
                 },
@@ -30,7 +30,7 @@
             },
             "db": {
                 "creds": {
-                    "ip": "10.134.64.66",
+                    "ip": "10.134.64.140",
                     "username": "yytcadm",
                     "password": "Pa55w_rd"
                 },
@@ -40,7 +40,7 @@
         "set2": {
             "tc": {
                 "creds": {
-                    "ip": "10.134.64.54",
+                    "ip": "10.134.64.43",
                     "username": "yytcadm",
                     "password": "Pa55w_rd"
                 },
@@ -57,7 +57,7 @@
             },
             "aw": {
                 "creds": {
-                    "ip": "10.134.64.58",
+                    "ip": "10.134.64.163",
                     "username": "yytcadm",
                     "password": "Pa55w_rd"
                 },
@@ -67,7 +67,7 @@
             },
             "db": {
                 "creds": {
-                    "ip": "10.134.64.57",
+                    "ip": "10.134.64.140",
                     "username": "yytcadm",
                     "password": "Pa55w_rd"
                 },
