@@ -34,7 +34,7 @@ router.patch('/set1/update', function (req, res, next) {
     for (var key in servicelist.windows.set1.tc) {
 
       if (servicelist.windows.set1.tc.hasOwnProperty(key) && key != 'creds') {
-        exec(`sc \\\\${servicelist.windows.set1.tc.creds.ip} query ${servicelist.windows.set1.tc[key]}`, (error, results) => {
+        exec(`sc \\\\${servicelist.windows.set1.tc.creds.ip} query ${key}`, (error, results) => {
           if (error) {
             res.status(400).send(error);
           }
@@ -62,7 +62,7 @@ router.patch('/set2/update', function (req, res, next) {
     for (var key in servicelist.windows.set2.tc) {
 
       if (servicelist.windows.set2.tc.hasOwnProperty(key) && key != 'creds') {
-        exec(`sc \\\\${servicelist.windows.set2.tc.creds.ip} query ${servicelist.windows.set2.tc[key]}`, (error, results) => {
+        exec(`sc \\\\${servicelist.windows.set2.tc.creds.ip} query ${key}`, (error, results) => {
           if (error) {
             res.status(400).send(error);
           }
@@ -87,7 +87,7 @@ router.patch('/set2/update', function (req, res, next) {
 
 router.patch('/set1/start/:id', function (req, res, next) {
   var key = 'Teamcenter Log Aggregator';
-  exec(`sc \\\\${servicelist.windows.set1.tc.creds.ip} start ${servicelist.windows.set1.tc[key]}`, (error, results) => {
+  exec(`sc \\\\${servicelist.windows.set1.tc.creds.ip} start ${key}`, (error, results) => {
     if (error) {
       res.status(400).send(error);
     }
@@ -108,7 +108,7 @@ router.patch('/set1/start/:id', function (req, res, next) {
 
 router.patch('/set2/start/:id', function (req, res, next) {
   var key = 'Teamcenter Action Manager Service';
-  exec(`sc \\\\${servicelist.windows.set2.tc.creds.ip} start ${servicelist.windows.set2.tc[key]}`, (error, results) => {
+  exec(`sc \\\\${servicelist.windows.set2.tc.creds.ip} start ${key}`, (error, results) => {
     if (error) {
       res.status(400).send(error);
     }
@@ -129,7 +129,7 @@ router.patch('/set2/start/:id', function (req, res, next) {
 
 router.patch('/set1/stop/:id', function (req, res, next) {
   var key = 'Teamcenter Log Aggregator';
-  exec(`sc \\\\${servicelist.windows.set1.tc.creds.ip} stop ${servicelist.windows.set1.tc[key]}`, (error, results) => {
+  exec(`sc \\\\${servicelist.windows.set1.tc.creds.ip} stop ${key}`, (error, results) => {
     if (error) {
       res.status(400).send(error);
     }
@@ -150,7 +150,7 @@ router.patch('/set1/stop/:id', function (req, res, next) {
 
 router.patch('/set2/stop/:id', function (req, res, next) {
   var key = 'Teamcenter Action Manager Service';
-  exec(`sc \\\\${servicelist.windows.set1.tc.creds.ip} stop ${servicelist.windows.set1.tc[key]}`, (error, results) => {
+  exec(`sc \\\\${servicelist.windows.set1.tc.creds.ip} stop ${key}`, (error, results) => {
     if (error) {
       res.status(400).send(error);
     }

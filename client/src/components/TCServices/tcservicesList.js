@@ -2,10 +2,12 @@ import React, { Component } from "react";
 import * as ReactBootStrap from "react-bootstrap"
 import { Button } from 'react-bootstrap';
 import axios from 'axios';
+var servicelist = require('../../../../services-list.json');
+
 
 const Service = (props) => (
     <tr>
-        <td>{props.service.SERVICE_NAME}</td>
+        <td>{servicelist.windows.set1.tc[props.service.SERVICE_NAME]}</td>
         <td>{props.service.STATE}</td>
         <td><Button type="button" class="btn btn-success active">Start</Button></td>
         <td>
@@ -21,6 +23,15 @@ export default class TCServiceList extends Component {
         this.state = { services: [] };
     }
 
+    updateData = async () => {
+        const url = "http://localhost:3000/tcservices/set1/update/";
+        const response = await fetch(url);
+        const data = await response.json();
+
+        this.setState({ services: data.Windows[0].TC });
+    }
+
+
     fetchData = async () => {
         const url = "http://localhost:3000/tcservices/set1/";
         const response = await fetch(url);
@@ -31,6 +42,12 @@ export default class TCServiceList extends Component {
 
     // This method will get the data from the database.
     async componentDidMount() {
+        await this.updateData();
+
+        // this.intervalId = setInterval(() => {
+        //     this.fetchData();
+        // }, 3000);
+
         await this.fetchData();
 
         this.intervalId = setInterval(() => {
