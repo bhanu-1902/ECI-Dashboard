@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import * as ReactBootStrap from "react-bootstrap"
 import { Button } from 'react-bootstrap';
 import axios from 'axios';
+
 var servicejson = require('../../services-list.json');
 
 var displayNames = [];
@@ -10,6 +11,7 @@ for (var key in servicejson.windows.set1.tc) {
         displayNames.push(key);
     }
 }
+
 
 const Service = (props) => (
 
@@ -39,7 +41,6 @@ export default class TCServiceList extends Component {
 
     //     this.setState({ services: data.Windows[0].TC });
     // }
-
     fetchData = async () => {
         axios
             .get("http://localhost:3000/tcservices/set1")
@@ -78,6 +79,12 @@ export default class TCServiceList extends Component {
 
     // This method will get the data from the database.
     async componentDidMount() {
+        await this.updateData();
+
+        // this.intervalId = setInterval(() => {
+        //     this.fetchData();
+        // }, 3000);
+
         await this.fetchData();
 
         this.intervalId = setInterval(() => {

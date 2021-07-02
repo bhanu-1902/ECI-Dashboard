@@ -1,6 +1,7 @@
 {
   "files": {
     "main.css": "/static/css/main.9d5b29c0.chunk.css",
+<<<<<<< HEAD
     "main.js": "/static/js/main.39550165.chunk.js",
     "main.js.map": "/static/js/main.39550165.chunk.js.map",
     "runtime-main.js": "/static/js/runtime-main.8d167448.js",
@@ -10,9 +11,21 @@
     "static/js/2.618e4535.chunk.js.map": "/static/js/2.618e4535.chunk.js.map",
     "static/js/3.29bd0382.chunk.js": "/static/js/3.29bd0382.chunk.js",
     "static/js/3.29bd0382.chunk.js.map": "/static/js/3.29bd0382.chunk.js.map",
+=======
+    "main.js": "/static/js/main.477d8988.chunk.js",
+    "main.js.map": "/static/js/main.477d8988.chunk.js.map",
+    "runtime-main.js": "/static/js/runtime-main.692c6321.js",
+    "runtime-main.js.map": "/static/js/runtime-main.692c6321.js.map",
+    "static/css/2.61b4cb56.chunk.css": "/static/css/2.61b4cb56.chunk.css",
+    "static/js/2.057c35b5.chunk.js": "/static/js/2.057c35b5.chunk.js",
+    "static/js/2.057c35b5.chunk.js.map": "/static/js/2.057c35b5.chunk.js.map",
+    "static/js/3.ca6ae848.chunk.js": "/static/js/3.ca6ae848.chunk.js",
+    "static/js/3.ca6ae848.chunk.js.map": "/static/js/3.ca6ae848.chunk.js.map",
+>>>>>>> 9c6c3a976ea73cc682d89b09fe2bd782eef0da19
     "index.html": "/index.html",
     "static/css/2.d45d6843.chunk.css.map": "/static/css/2.d45d6843.chunk.css.map",
     "static/css/main.9d5b29c0.chunk.css.map": "/static/css/main.9d5b29c0.chunk.css.map",
+<<<<<<< HEAD
     "static/js/2.618e4535.chunk.js.LICENSE.txt": "/static/js/2.618e4535.chunk.js.LICENSE.txt"
   },
   "entrypoints": [
@@ -21,5 +34,15 @@
     "static/js/2.618e4535.chunk.js",
     "static/css/main.9d5b29c0.chunk.css",
     "static/js/main.39550165.chunk.js"
+=======
+    "static/js/2.057c35b5.chunk.js.LICENSE.txt": "/static/js/2.057c35b5.chunk.js.LICENSE.txt"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.692c6321.js",
+    "static/css/2.61b4cb56.chunk.css",
+    "static/js/2.057c35b5.chunk.js",
+    "static/css/main.9d5b29c0.chunk.css",
+    "static/js/main.477d8988.chunk.js"
+>>>>>>> 9c6c3a976ea73cc682d89b09fe2bd782eef0da19
   ]
 }

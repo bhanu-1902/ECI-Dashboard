@@ -40,7 +40,7 @@ router.patch('/set1/update', function (req, res, next) {
     for (var key in servicelist.windows.set1.tc) {
 
       if (servicelist.windows.set1.tc.hasOwnProperty(key) && key != 'creds') {
-        exec(`sc \\\\${servicelist.windows.set1.tc.creds.ip} query ${servicelist.windows.set1.tc[key]}`, (error, results) => {
+        exec(`sc \\\\${servicelist.windows.set1.tc.creds.ip} query ${key}`, (error, results) => {
           if (error) {
             res.status(400).send(error);
           }
@@ -153,7 +153,7 @@ router.patch('/set1/stop/:key', function (req, res, next) {
 
 router.patch('/set2/stop/:id', function (req, res, next) {
   var key = 'Teamcenter Action Manager Service';
-  exec(`sc \\\\${servicelist.windows.set1.tc.creds.ip} stop ${servicelist.windows.set1.tc[key]}`, (error, results) => {
+  exec(`sc \\\\${servicelist.windows.set1.tc.creds.ip} stop ${key}`, (error, results) => {
     if (error) {
       res.status(400).send(error);
     }
