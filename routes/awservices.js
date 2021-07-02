@@ -3,7 +3,7 @@ var router = express.Router();
 var exec = require('child_process').exec;
 var Services = require('../models/services');
 var ObjectId = require('mongodb').ObjectId;
-var servicelist = require('../services-list.json');
+var servicelist = require('../client/src/services-list.json');
 var cmd = require('node-cmd');
 
 cmd.run(`net use \\\\${servicelist.windows.set1.aw.creds.ip} ${servicelist.windows.set1.aw.creds.password} /user:${servicelist.windows.set1.aw.creds.username}`, function (err, data, stderr) {

@@ -3,6 +3,7 @@ const Schema = mongoose.Schema;
 
 const ServicesSchema = new Schema(
   {
+
     SERVICE_NAME: {
       type: String,
       required: true
@@ -14,7 +15,9 @@ const ServicesSchema = new Schema(
     },
 
     TYPE: String
-  },
+
+  }
+
 );
 
 const ServiceTypesSchema = new Schema(
