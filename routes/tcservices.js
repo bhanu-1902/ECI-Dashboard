@@ -6,41 +6,52 @@ var ObjectId = require('mongodb').ObjectId;
 var servicelist = require('../client/src/services-list.json');
 var cmd = require('node-cmd');
 
+var set1ID = ObjectId("60ec06d4e42e985148a91aec");
+var set2ID = ObjectId("60ec069eb8c3660dc8b63630");
+var objID, setNumber;
+
 cmd.run(`net use \\\\${servicelist.windows.set1.tc.creds.ip} ${servicelist.windows.set1.tc.creds.password} /user:${servicelist.windows.set1.tc.creds.username}`, function (err, data, stderr) {
   console.log('Result : ', data);
 });
 
-/* GET home page. */
-router.get('/set1', function (req, res, next) {
-  Services.findOne({ _id: ObjectId("60de9882b9e6d141b43d8c47") }).then(function (Status) {
+cmd.run(`net use \\\\${servicelist.windows.set2.tc.creds.ip} ${servicelist.windows.set2.tc.creds.password} /user:${servicelist.windows.set2.tc.creds.username}`, function (err, data, stderr) {
+  console.log('Result : ', data);
+});
+
+function checkSetNumber(id) {
+  if (id === '1') {
+    objID = set1ID;
+    setNumber = servicelist.windows.set1;
+  }
+  else {
+    objID = set2ID;
+    setNumber = servicelist.windows.set2;
+  }
+}
+
+router.get('/get/set/:id', function (req, res, next) {
+
+  checkSetNumber(req.params.id);
+
+  Services.find({ _id: objID }).then(function (Status) {
     res.send(Status);
   }).catch(next);
 });
 
-router.get('/set2', function (req, res, next) {
-  Services.findOne({ _id: ObjectId("60bdc443f7330d0fe42ad476") }).then(function (Status) {
-    res.send(Status);
-  }).catch(next);
-});
-
-router.post('/set1/create', function (req, res, next) {
+router.post('/create/set/:id', function (req, res, next) {
   Services.create({ $push: { 'Windows': req.body } }).then(function (Status) {
     res.send(Status);
   }).catch(next);
 });
 
-router.post('/set2/create', function (req, res, next) {
-  Services.create({ $push: { 'Windows': req.body } }).then(function (Status) {
-    res.send(Status);
-  }).catch(next);
-});
+router.post('/add/set/:id', function (req, res, next) {
+  checkSetNumber(req.params.id);
 
-router.patch('/set1/update', function (req, res, next) {
-  Services.findOneAndUpdate({ _id: ObjectId("60de9882b9e6d141b43d8c47") }, { $pull: { "Windows.0.TC": req.body } }, { new: true }).then(function () {
-    for (var key in servicelist.windows.set1.tc) {
+  Services.findOneAndUpdate({ _id: objID }, { $pull: { "Windows.0.TC": req.body } }, { new: true }).then(function () {
+    for (var key in setNumber.tc) {
 
-      if (servicelist.windows.set1.tc.hasOwnProperty(key) && key != 'creds') {
-        exec(`sc \\\\${servicelist.windows.set1.tc.creds.ip} query ${key}`, (error, results) => {
+      if (setNumber.tc.hasOwnProperty(key) && key != 'creds') {
+        exec(`sc \\\\${setNumber.tc.creds.ip} query ${setNumber.tc[key]}`, (error, results) => {
           if (error) {
             res.status(400).send(error);
           }
@@ -51,49 +62,49 @@ router.patch('/set1/update', function (req, res, next) {
             return jsonres;
           }, {});
 
-          Services.updateOne({ _id: ObjectId("60de9882b9e6d141b43d8c47") }, { $addToSet: { "Windows.0.TC": req.body } }, { new: true }).then(function (Status) {
-            res.send(Status);
-          }).catch(next);
-
-        })
-      }
-    }
-
-
-  }).catch(next);
-
-});
-
-router.patch('/set2/update', function (req, res, next) {
-  Services.findOneAndUpdate({ _id: ObjectId("60bdc443f7330d0fe42ad476") }, { $pull: { "Windows.0.TC": req.body } }, { new: true }).then(function () {
-    for (var key in servicelist.windows.set2.tc) {
-
-      if (servicelist.windows.set2.tc.hasOwnProperty(key) && key != 'creds') {
-        exec(`sc \\\\${servicelist.windows.set2.tc.creds.ip} query ${servicelist.windows.set1.tc[key]}`, (error, results) => {
-          if (error) {
-            res.status(400).send(error);
-          }
-
-          var obj = results.split(/\r?\n/).reduce(function (jsonres, status) {
-            var s = status.split(':');
-            jsonres[s.shift().trim()] = s.join(':').trim();
-            return jsonres;
-          }, {});
-
-          req.body = JSON.parse(JSON.stringify(obj));
-
-          Services.updateOne({ _id: ObjectId("60bdc443f7330d0fe42ad476") }, { $addToSet: { "Windows.0.TC": req.body } }, { new: true }).then(function (Status) {
+          Services.updateOne({ _id: objID }, { $addToSet: { "Windows.0.TC": req.body } }, { new: true }).then(function (Status) {
+            if (res.statusCode === 400) {
+              res.send(Status);
+            }
             res.send(Status);
           }).catch(next);
         })
       }
     }
+    //res.status(201).send();
   }).catch(next);
-
 });
 
-router.patch('/set1/start/:key', function (req, res, next) {
-  exec(`sc \\\\${servicelist.windows.set1.tc.creds.ip} start ${servicelist.windows.set1.tc[req.params.key]}`, (error, results) => {
+router.patch('/update/set/:id/:key', function (req, res, next) {
+
+  checkSetNumber(req.params.id);
+
+  if (setNumber.tc.hasOwnProperty(req.params.key) && req.params.key != 'creds') {
+    exec(`sc \\\\${setNumber.tc.creds.ip} query ${setNumber.tc[req.params.key]}`, (error, results) => {
+      if (error) {
+        res.status(400).send(error);
+      }
+
+      req.body = results.split(/\r?\n/).reduce(function (jsonres, status) {
+        var s = status.split(':');
+        jsonres[s.shift().trim()] = s.join(':').trim();
+        return jsonres;
+      }, {});
+
+
+      Services.updateOne({ _id: objID, "Windows.0.TC.SERVICE_NAME": setNumber.tc[req.params.key].replace(/['"]+/g, '') }, { $set: { "Windows.0.TC.$": req.body } }, { new: true }).then(function (Status) {
+        res.send(Status);
+      }).catch(next);
+
+    })
+  }
+});
+
+router.patch('/start/set/:id/:key', function (req, res, next) {
+
+  checkSetNumber(req.params.id);
+
+  exec(`sc \\\\${setNumber.tc.creds.ip} start ${setNumber.tc[req.params.key]}`, (error, results) => {
     if (error) {
       res.status(400).send(error);
     }
@@ -104,77 +115,38 @@ router.patch('/set1/start/:key', function (req, res, next) {
       return jsonres;
     }, {});
 
-    Services.updateOne({ _id: ObjectId("60de9882b9e6d141b43d8c47"), "Windows.0.TC.SERVICE_NAME": servicelist.windows.set1.tc[req.params.key] }, { $set: { "Windows.0.TC.$": req.body } }, { new: true }).then(function (Status) {
+    Services.updateOne({ _id: objID, "Windows.0.TC.SERVICE_NAME": setNumber.tc[req.params.key].replace(/['"]+/g, '') }, { $set: { "Windows.0.TC.$": req.body } }, { new: true }).then(function (Status) {
       res.send(Status);
     }).catch(next);
   })
 });
 
-router.patch('/set2/start/:id', function (req, res, next) {
-  var key = 'Teamcenter Action Manager Service';
-  exec(`sc \\\\${servicelist.windows.set2.tc.creds.ip} start ${servicelist.windows.set1.tc[key]}`, (error, results) => {
+router.patch('/stop/set/:id/:key', function (req, res, next) {
+
+  checkSetNumber(req.params.id);
+
+  exec(`sc \\\\${setNumber.tc.creds.ip} stop ${setNumber.tc[req.params.key]}`, (error, results) => {
     if (error) {
       res.status(400).send(error);
     }
 
-    var obj = results.split(/\r?\n/).reduce(function (jsonres, status) {
+    req.body = results.split(/\r?\n/).reduce(function (jsonres, status) {
       var s = status.split(':');
       jsonres[s.shift().trim()] = s.join(':').trim();
       return jsonres;
     }, {});
 
-    req.body = JSON.parse(JSON.stringify(obj));
-
-    Services.updateOne({ _id: ObjectId("60bdc443f7330d0fe42ad476"), "Windows.0.TC._id": req.params.id }, { $set: { "Windows.0.TC.$": req.body } }, { new: true }).then(function (Status) {
+    Services.updateOne({ _id: objID, "Windows.0.TC.SERVICE_NAME": setNumber.tc[req.params.key].replace(/['"]+/g, '') }, { $set: { "Windows.0.TC.$": req.body } }, { new: true }).then(function (Status) {
       res.send(Status);
     }).catch(next);
   })
 });
 
-router.patch('/set1/stop/:key', function (req, res, next) {
-  exec(`sc \\\\${servicelist.windows.set1.tc.creds.ip} stop ${servicelist.windows.set1.tc[req.params.key]}`, (error, results) => {
-    if (error) {
-      res.status(400).send(error);
-    }
+router.delete('/delete/set/:id/:key', function (req, res, next) {
 
-    var obj = results.split(/\r?\n/).reduce(function (jsonres, status) {
-      var s = status.split(':');
-      jsonres[s.shift().trim()] = s.join(':').trim();
-      return jsonres;
-    }, {});
+  checkSetNumber(req.params.id);
 
-    req.body = JSON.parse(JSON.stringify(obj));
-
-    Services.updateOne({ _id: ObjectId("60de9882b9e6d141b43d8c47"), "Windows.0.TC.SERVICE_NAME": servicelist.windows.set1.tc[req.params.key] }, { $set: { "Windows.0.TC.$": req.body } }, { new: true }).then(function (Status) {
-      res.send(Status);
-    }).catch(next);
-  })
-});
-
-router.patch('/set2/stop/:id', function (req, res, next) {
-  var key = 'Teamcenter Action Manager Service';
-  exec(`sc \\\\${servicelist.windows.set1.tc.creds.ip} stop ${key}`, (error, results) => {
-    if (error) {
-      res.status(400).send(error);
-    }
-
-    var obj = results.split(/\r?\n/).reduce(function (jsonres, status) {
-      var s = status.split(':');
-      jsonres[s.shift().trim()] = s.join(':').trim();
-      return jsonres;
-    }, {});
-
-    req.body = JSON.parse(JSON.stringify(obj));
-
-    Services.updateOne({ _id: ObjectId("60bdc443f7330d0fe42ad476"), "Windows.0.TC._id": req.params.id }, { $set: { "Windows.0.TC.$": req.body } }, { new: true }).then(function (Status) {
-      res.send(Status);
-    }).catch(next);
-  })
-});
-
-
-router.delete('/set1/delete/:id', function (req, res, next) {
-  Services.updateOne({ _id: ObjectId("60de9882b9e6d141b43d8c47"), "Windows.0.TC._id": req.params.id }, { $pull: { "Windows.0.TC": { _id: req.params.id } } }, { new: true }).then(function (Status) {
+  Services.updateOne({ _id: objID, "Windows.0.TC.SERVICE_NAME": setNumber.tc[req.params.key].replace(/['"]+/g, '') }, { $pull: { "Windows.0.TC": { SERVICE_NAME: setNumber.tc[req.params.key].replace(/['"]+/g, '') } } }, { new: true }).then(function (Status) {
     res.send(Status);
   }).catch(next);
   // Services.deleteMany({}).then(function (Status) {
@@ -182,14 +154,6 @@ router.delete('/set1/delete/:id', function (req, res, next) {
   // }).catch(next);
 });
 
-router.delete('/set2/delete/:id', function (req, res, next) {
-  Services.updateOne({ _id: ObjectId("60bdc443f7330d0fe42ad476"), "Windows.0.TC._id": req.params.id }, { $pull: { "Windows.0.TC": { _id: req.params.id } } }, { new: true }).then(function (Status) {
-    res.send(Status);
-  }).catch(next);
-  // Services.deleteMany({}).then(function (Status) {
-  //   res.send(Status);
-  // }).catch(next);
-});
 module.exports = router;
 
 

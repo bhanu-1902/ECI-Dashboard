@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import * as ReactBootStrap from "react-bootstrap"
 import { Button } from 'react-bootstrap';
 import axios from 'axios';
-
 var servicejson = require('../../services-list.json');
 
 var displayNames = [];
@@ -12,9 +11,7 @@ for (var key in servicejson.windows.set1.tc) {
     }
 }
 
-
 const Service = (props) => (
-
     <tr>
         <td>{props.displayname}</td>
         <td>{props.service}</td>
@@ -34,18 +31,11 @@ export default class TCServiceList extends Component {
         this.state = { services: [] };
     }
 
-    // updateData = async () => {
-    //     const url = "http://localhost:3000/tcservices/set1/update";
-    //     const response = await fetch(url);
-    //     const data = await response.json();
-
-    //     this.setState({ services: data.Windows[0].TC });
-    // }
     fetchData = async () => {
         axios
-            .get("http://localhost:3000/tcservices/set1")
+            .get("http://localhost:3000/tcservices/get/set/1")
             .then((response) => {
-                this.setState({ services: response.data.Windows[0].TC });
+                this.setState({ services: response.data[0].Windows[0].TC });
             })
             .catch(function (error) {
                 console.log(error);
@@ -53,37 +43,25 @@ export default class TCServiceList extends Component {
     }
 
     updateData = async () => {
-        axios
-            .patch("http://localhost:3000/tcservices/set1/update");
+        for (var i = 0; i < displayNames.length; i++) {
+            axios
+                .patch("http://localhost:3000/tcservices/update/set/1/" + displayNames[i]);
+        }
 
     }
 
-
-    startService(serviceName) {
+    startService = async (serviceName) => {
         axios
-            .patch("http://localhost:3000/tcservices/set1/start/" + serviceName)
-            .then((response) => {
-                console.log(response);
-            });
+            .patch("http://localhost:3000/tcservices/start/set/1/" + serviceName);
     }
 
     stopService = async (serviceName) => {
         axios
-            .patch("http://localhost:3000/tcservices/set1/stop/" + serviceName)
-            .then((response) => {
-                console.log(response);
-            });
+            .patch("http://localhost:3000/tcservices/stop/set/1/" + serviceName);
     }
-
-
 
     // This method will get the data from the database.
     async componentDidMount() {
-        await this.updateData();
-
-        // this.intervalId = setInterval(() => {
-        //     this.fetchData();
-        // }, 3000);
 
         await this.fetchData();
 
@@ -91,34 +69,13 @@ export default class TCServiceList extends Component {
             this.fetchData();
         }, 3000);
 
-        this.updateData();
+        await this.updateData();
 
-        // this.intervalId2 = setInterval(() => {
-        //     this.updateData();
-        // }, 3000);
-
-        // await this.startService();
-        // this.intervalId2 = setInterval(() => {
-        //     this.updateData()
-        // }, 3000);
+        this.intervalId2 = setInterval(() => {
+            this.updateData();
+        }, 3000);
 
     }
-
-    // componentWillUnmount() {
-    //     clearInterval(this.intervalId);
-    //     //clearInterval(this.intervalId2);
-    // }
-
-    // componentDidUpdate(prevState, prevProps) {
-    //     this.updateData();
-
-    //     this.intervalId2 = setInterval(() => {
-    //         this.updateData();
-    //     }, 3000);
-
-    //     this.service = `${this.state.service}`
-    // }
-
 
     // This method will map out the services on the table
     serviceList() {
