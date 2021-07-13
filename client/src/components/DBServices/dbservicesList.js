@@ -35,7 +35,7 @@ export default class DBServiceList extends Component {
         axios
             .get("http://localhost:3000/dbservices/get/set/1")
             .then((response) => {
-                this.setState({ services: response.data[0].Windows[0].TC });
+                this.setState({ services: response.data[0].Windows[0].DB });
             })
             .catch(function (error) {
                 console.log(error);
@@ -93,14 +93,14 @@ export default class DBServiceList extends Component {
         //console.log(serviceStateMap);
 
         return this.state.services.map(() => {
-            // console.log(servicejson.windows.set1.tc[displayNames[i]]);
-            // console.log(serviceStateMap.get(servicejson.windows.set1.tc[displayNames[i]].replace(/['"]+/g, ''))[0]);
-            // console.log(serviceStateMap.get(servicejson.windows.set1.tc[displayNames[i]].replace(/['"]+/g, ''))[1]);
+            // console.log(servicejson.windows.set1.db[displayNames[i]]);
+            // console.log(serviceStateMap.get(servicejson.windows.set1.db[displayNames[i]].replace(/['"]+/g, ''))[0]);
+            // console.log(serviceStateMap.get(servicejson.windows.set1.db[displayNames[i]].replace(/['"]+/g, ''))[1]);
             return (
                 <Service
                     displayname={displayNames[i++]}
-                    service={serviceStateMap.get(servicejson.windows.set1.tc[displayNames[i - 1]].replace(/['"]+/g, ''))[0]}
-                    _id={serviceStateMap.get(servicejson.windows.set1.tc[displayNames[i - 1]].replace(/['"]+/g, ''))[1]}
+                    service={serviceStateMap.get(servicejson.windows.set1.db[displayNames[i - 1]].replace(/['"]+/g, ''))[0]}
+                    _id={serviceStateMap.get(servicejson.windows.set1.db[displayNames[i - 1]].replace(/['"]+/g, ''))[1]}
                     startService={this.startService}
                     stopService={this.stopService}
                 />

@@ -61,7 +61,7 @@
                     "username": "yytcadm",
                     "password": "Pa55w_rd"
                 },
-                "Teamcenter Log Forwarder": "Teamcenter_Log_Aggregator",
+                "Teamcenter Log Forwarder": "Teamcenter_Log_Forwarder",
                 "Teamcenter Process Manager": "\"Teamcenter Process Manager\"",
                 "Weblogic_tc_AdminServer": "Weblogic_tc_AdminServer"
             },
