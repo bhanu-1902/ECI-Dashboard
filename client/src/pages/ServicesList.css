@@ -1,0 +1,10 @@
+.td1 {
+  float: left;
+  width: 25%;
+  height: 50px;
+}
+
+.td1.data {
+  padding-left: 1rem;
+  padding-top: 1rem;
+}

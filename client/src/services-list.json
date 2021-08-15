@@ -40,9 +40,9 @@
         "set2": {
             "tc": {
                 "creds": {
-                    "ip": "10.134.64.43",
-                    "username": "yytcadm",
-                    "password": "Pa55w_rd"
+                    "ip": "pnv6s1884",
+                    "username": "plm\\yytcadm",
+                    "password": "S!p!APR04S!p!APR04S!p!APR04"
                 },
                 "Teamcenter Action Manager Service": "actionmgrd",
                 "Teamcenter 4GD Change Detection Service": "4gd_change_detection_service",
@@ -57,9 +57,9 @@
             },
             "aw": {
                 "creds": {
-                    "ip": "10.134.64.163",
-                    "username": "yytcadm",
-                    "password": "Pa55w_rd"
+                    "ip": "pnv6s1883",
+                    "username": "plm\\yytcadm",
+                    "password": "S!p!APR04S!p!APR04S!p!APR04"
                 },
                 "Teamcenter Log Forwarder": "Teamcenter_Log_Forwarder",
                 "Teamcenter Process Manager": "\"Teamcenter Process Manager\"",
@@ -67,9 +67,9 @@
             },
             "db": {
                 "creds": {
-                    "ip": "10.134.64.140",
-                    "username": "yytcadm",
-                    "password": "Pa55w_rd"
+                    "ip": "pnv6s1939",
+                    "username": "plm\\yytcadm",
+                    "password": "S!p!APR04S!p!APR04S!p!APR04"
                 },
                 "OracleServiceTC": "OracleServiceTC"
             }
