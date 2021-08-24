@@ -3,6 +3,7 @@ import "./App.css";
 import TCServices from "./pages/TCservices";
 import AWServices from "./pages/AWservices";
 import DBServices from "./pages/DBservices";
+import Login from "./pages/Login";
 import Sidebar from "./components/SideBar";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
@@ -41,6 +42,18 @@ const Production = () => {
   return <h1>Environment Admin/Production Environment</h1>;
 };
 
+const Communication = () => {
+  return <h1>Team links for environment communication</h1>;
+};
+
+const Faq = () => {
+  return <h1>FAQ</h1>;
+};
+
+// const Auth = () => {
+//   return <Login />;
+// };
+
 function App() {
   const [inactive, setInactive] = useState(false);
   // <AWServiceList />;
@@ -78,6 +91,15 @@ function App() {
             </Route>
             <Route path={"/eci-home/environment-admin/production"}>
               <Production />
+            </Route>
+            <Route path={"/eci-home/env-comm"}>
+              <Communication />
+            </Route>
+            <Route path={"/eci-home/faq"}>
+              <Faq />
+            </Route>
+            <Route path={"/eci-home/login"}>
+              <Login />
             </Route>
           </Switch>
         </div>

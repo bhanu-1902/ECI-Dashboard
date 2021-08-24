@@ -25,6 +25,12 @@ const menuItems = [
       },
     ],
   },
+  {
+    name: "Environment communication",
+    to: "/eci-home/env-comm",
+  },
+  { name: "FAQ", to: "/eci-home/faq" },
+  { name: "Login", to: "/eci-home/login" },
 ];
 function SideBar(props) {
   const [inactive, setInactive] = useState(false);
